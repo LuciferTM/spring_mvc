@@ -32,10 +32,10 @@ public class SpittleController {
         return "registerForm";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/spittles",method = RequestMethod.GET)
     public String spittles(Map model) {
         // 将spittles添加到model中
-        model.put("spittles", spittleRepository.findSpittles(Long.MAX_VALUE, 20));
+        model.put("spittleList", spittleRepository.findSpittles(Long.MAX_VALUE, 20));
 
         // 返回视图名称
         return "spittles";

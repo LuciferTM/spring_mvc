@@ -26,7 +26,7 @@ public class SpittleControllerTest {
                 .setSingleView(new InternalResourceView("/WEB_INF/views/spittles.jsp")).build();
         //调用MockMvc.perform(RequestBuilder requestBuilder)发起一个http请求，
         //然后将得到ResultActions
-        mockMvc.perform(MockMvcRequestBuilders.get("/spittles"))// 添加验证断言来判断执行请求后的结果是否是预期的；
+        mockMvc.perform(MockMvcRequestBuilders.get("/spitter/spittles/"))// 添加验证断言来判断执行请求后的结果是否是预期的；
                 .andExpect(MockMvcResultMatchers.view().name("spittles"))// view()：得到视图验证器；
                 // 得到相应的***ResultMatchers后，接着再调用其相应的API得到ResultMatcher，
                 // 如ModelResultMatchers.attributeExists(final String... names)判断Model属性是否存在。
