@@ -1,13 +1,16 @@
 package com.lucifer.spitter.web;
 
 import com.lucifer.spitter.Spitter;
+import com.lucifer.spitter.Spittle;
 import com.lucifer.spitter.data.SpittleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -16,11 +19,11 @@ import java.util.Map;
 public class SpittleController {
 
     private SpittleRepository spittleRepository;
+    private static final String MAX_LONG_AS_STRING = "9223372036854775807";
 
     public SpittleController(){
 
     }
-
     @Autowired
     public SpittleController(SpittleRepository spittleRepository){
         this.spittleRepository = spittleRepository;
@@ -40,4 +43,14 @@ public class SpittleController {
         // 返回视图名称
         return "spittles";
     }
+
+    //处理查询参数：@RequestParam
+    @RequestMapping(value = "/spittles/page",method = RequestMethod.GET)
+    public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
+                                  @RequestParam(value = "count", defaultValue = "20") int count){
+        return spittleRepository.findSpittles(max,count);
+    }
+
+
+
 }
