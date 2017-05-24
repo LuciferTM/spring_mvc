@@ -6,6 +6,7 @@ import com.lucifer.spitter.data.SpittleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,10 +48,17 @@ public class SpittleController {
     //处理查询参数：@RequestParam
     @RequestMapping(value = "/spittles/page",method = RequestMethod.GET)
     public List<Spittle> spittles(@RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
-                                  @RequestParam(value = "count", defaultValue = "20") int count){
+                                  @RequestParam(value = "count", defaultValue = "20") int count,
+                                  Model model){
+        model.addAttribute("spittleList", spittleRepository.findSpittles(Long.MAX_VALUE, 20));
         return spittleRepository.findSpittles(max,count);
     }
 
-
+    //通过路径参数传递数据：@PathVariable
+    @RequestMapping(value="/spittles/{spittleId}", method=RequestMethod.GET)
+    public String spittle(@PathVariable("spittleId") long spittleId, Model model) {
+        model.addAttribute(spittleRepository.findOne(spittleId));
+        return "spittles";
+    }
 
 }
